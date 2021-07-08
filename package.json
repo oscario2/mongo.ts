@@ -1,0 +1,9 @@
+{
+    "name": "mongo.ts",
+    "version": "0.0.1",
+    "type": "module",
+    "scripts": {
+        "mongo": "deno run --allow-env --allow-net --unstable tests/mongo.test.ts",
+        "all": "npm run mongo"
+    }
+}

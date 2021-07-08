@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  mongo-ts:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    container_name: mongo.ts
+    links:
+      - mongo-db
+    environment:
+      WAIT_HOSTS: mongo-db:27017
+
+  mongo-db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: mongo-db
+    # volumes:
+    #  - ./db/:/data/db

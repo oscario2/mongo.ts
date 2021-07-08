@@ -1,0 +1,23 @@
+name: mongo.ts
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        container:
+            image: mongo:4.4.5
+        
+        # act doesn't support 'services'
+        steps:
+        - uses: actions/checkout@v2
+        # - uses: supercharge/mongodb-github-action@1.6.0
+        - run: apt-get update && apt-get install -y wget unzip
+        - run: wget https://github.com/denoland/deno/releases/download/v1.11.5/deno-x86_64-unknown-linux-gnu.zip
+        - run: unzip *.zip
+        - run: mongod --fork --syslog
+        - run: ./deno cache --unstable deps.ts
+        - run: ./deno run -A --unstable tests/mongo.test.ts
